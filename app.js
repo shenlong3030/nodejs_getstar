@@ -9,10 +9,10 @@ async function getStar(urls) {
   			continue;
   		}
 		r = await nightmare.goto(urls[i])
-		  .wait('.score-average')
+		  .wait(Math.floor((Math.random() * 1000) + 500))
 		  .evaluate(()=>{
-				var sao = document.querySelector('.score-average').innerText;
-				var dg = document.querySelector('div.count').innerText;
+				var sao = document.querySelector('.score-average') ? document.querySelector('.score-average').innerText : "-";
+				var dg = document.querySelector('div.count') ? document.querySelector('div.count').innerText : "-";
 				return sao + ";" + dg;
 		  })
 		console.log(r);
@@ -31,7 +31,7 @@ var rl = readline.createInterface({
 });
 
 // readline
-rl.prompt('input URLs (separate by line)');
+rl.prompt('input URLs (separate by line) , press Ctrl+D to complete');
 rl.on('line', function (cmd) {
     input.push(cmd);
 });
