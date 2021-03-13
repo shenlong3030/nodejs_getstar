@@ -5,7 +5,7 @@ var Nightmare = require('nightmare'),
 async function getStar(urls) {
 	var count = 1;
   	for (var i = 0; i < urls.length; i++) {
-  		var delay = Math.floor((Math.random() * 1000) + 500);
+  		var delay = Math.floor((Math.random() * 1000) + 2000);
   		
   		// open 2nd URL, wait to process captcha
   		if(count==2){
@@ -18,10 +18,25 @@ async function getStar(urls) {
   		try {
 			r = await nightmare.goto(urls[i])
 			  .wait(delay)
+			  .scrollTo(500,0)
+			  .wait(500)
+			  .scrollTo(1000,0)
+			  .wait(500)
+			  .scrollTo(1500,0)
+			  .wait(500)
+			  .scrollTo(2000,0)
+			  .wait(500)
 			  .evaluate(()=>{
-					var sao = document.querySelector('.score-average') ? document.querySelector('.score-average').innerText : "-";
+			  		var err = document.querySelector('.comm-error');
+			  		var sao = document.querySelector('.score-average') ? document.querySelector('.score-average').innerText : "-";
 					var dg = document.querySelector('div.count') ? document.querySelector('div.count').innerText : "-";
-					return sao + ";" + dg;
+					var result;
+			  		if(err) {
+			  			result = "OFF";
+			  		} else {
+			  			result = sao + ";" + dg;
+			  		}
+					return result;
 			  })
 			console.log(r);
 			count++;
